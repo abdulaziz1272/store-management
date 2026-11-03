@@ -19,7 +19,6 @@ const CalculatorView = defineAsyncComponent(() => import('../views/CalculatorVie
 const MENU = [
   { to: '/', label: 'Bosh sahifa', roles: [] },
   { to: '/checkout', label: 'Kassa', roles: [] },
-  { to: '/calculator', label: 'Kalkulyator', roles: [] },
   { to: '/sales', label: 'Sotuvlar', roles: [] },
   { group: 'Ombor', roles: [] },
   { to: '/products', label: 'Mahsulotlar', roles: [] },
