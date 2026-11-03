@@ -313,13 +313,17 @@ onBeforeUnmount(() => {
 
 .calculator-value {
   max-width: 100%;
-  /* overflow-x: auto; */
+  overflow-x: auto;
   color: var(--ink);
   font-size: clamp(2rem, 9vw, 2.7rem);
   font-weight: 700;
   line-height: 1.2;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+.calculator-value::-webkit-scrollbar {
+  display: none;
 }
 
 .calculator-error {
