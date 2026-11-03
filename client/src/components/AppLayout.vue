@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, defineAsyncComponent, onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import { useAuthStore } from '../stores/auth';
@@ -12,6 +12,8 @@ const route = useRoute();
 const router = useRouter();
 
 const menuOpen = ref(false);
+const calculatorOpen = ref(false);
+const CalculatorView = defineAsyncComponent(() => import('../views/CalculatorView.vue'));
 
 // Menu items. "roles" empty means every role can see the item.
 const MENU = [
@@ -119,5 +121,131 @@ async function logout() {
         <slot />
       </main>
     </div>
+
+    <button
+      class="calculator-fab"
+      type="button"
+      aria-label="Kalkulyatorni ochish"
+      title="Kalkulyator"
+      @click="calculatorOpen = true"
+    >
+      <span aria-hidden="true">＋</span>
+      <span>Kalkulyator</span>
+    </button>
+
+    <div
+      v-if="calculatorOpen"
+      class="calculator-overlay"
+      @click.self="calculatorOpen = false"
+      @keydown.esc="calculatorOpen = false"
+    >
+      <section class="calculator-modal" role="dialog" aria-modal="true" aria-label="Kalkulyator">
+        <button
+          class="calculator-close"
+          type="button"
+          aria-label="Yopish"
+          @click="calculatorOpen = false"
+        >
+          ×
+        </button>
+        <CalculatorView />
+      </section>
+    </div>
   </div>
 </template>
+
+<style scoped>
+.calculator-fab {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 17px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--steel);
+  color: #ffffff;
+  font: inherit;
+  font-weight: 600;
+  box-shadow: 0 5px 18px rgba(30, 42, 50, 0.25);
+  cursor: pointer;
+}
+
+.calculator-fab:hover {
+  background: var(--steel-dark);
+}
+
+.calculator-fab > span:first-child {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.calculator-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  overflow-y: auto;
+  background: rgba(20, 30, 38, 0.55);
+}
+
+.calculator-modal {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  max-height: calc(100vh - 36px);
+  overflow-y: auto;
+  padding: 22px 16px 10px;
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+}
+
+.calculator-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.calculator-modal :deep(.calculator-page) {
+  max-width: none;
+}
+
+.calculator-modal :deep(.calculator-card) {
+  margin-top: 12px;
+  margin-bottom: 10px;
+  box-shadow: none;
+}
+
+@media (max-width: 600px) {
+  .calculator-fab {
+    right: 14px;
+    bottom: 14px;
+    padding: 11px 14px;
+  }
+
+  .calculator-fab > span:last-child {
+    display: none;
+  }
+
+  .calculator-modal {
+    padding: 22px 10px 8px;
+  }
+}
+</style>
