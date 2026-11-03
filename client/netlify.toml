@@ -1,6 +1,5 @@
 # Netlify settings.
 #
-# IMPORTANT: replace YOUR-RENDER-APP with the real name of your Render service.
 # The first rule makes Netlify pass every /api request to the Render server.
 # Because the browser only ever talks to the Netlify address, login cookies
 # work without any CORS setup.
@@ -11,7 +10,7 @@
 
 [[redirects]]
   from = "/api/*"
-  to = "https://YOUR-RENDER-APP.onrender.com/api/:splat"
+  to = "https://store-management-api-i788.onrender.com/api/:splat"
   status = 200
   force = true
 
