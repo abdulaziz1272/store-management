@@ -180,6 +180,15 @@ function handleAction(action) {
 }
 
 function handleKeyboard(event) {
+  const target = event.target;
+  const isTypingField = target instanceof HTMLElement && (
+    target.isContentEditable ||
+    ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName)
+  );
+
+  // Do not hijack normal typing in search boxes or forms.
+  if (isTypingField) return;
+
   const key = event.key;
 
   if (/^\d$/.test(key)) {
