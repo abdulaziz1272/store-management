@@ -112,6 +112,16 @@ async function logout() {
 
         <div class="spacer"></div>
 
+        <button
+          class="btn btn-small calculator-header-button"
+          type="button"
+          aria-label="Kalkulyatorni ochish"
+          @click="calculatorOpen = true"
+        >
+          <span aria-hidden="true">＋</span>
+          Kalkulyator
+        </button>
+
         <RouterLink to="/profile">{{ auth.user.fullName }} ({{ ROLE_LABELS[auth.role] }})</RouterLink>
         <button class="btn btn-small" type="button" @click="logout">Chiqish</button>
       </header>
@@ -120,17 +130,6 @@ async function logout() {
         <slot />
       </main>
     </div>
-
-    <button
-      class="calculator-fab"
-      type="button"
-      aria-label="Kalkulyatorni ochish"
-      title="Kalkulyator"
-      @click="calculatorOpen = true"
-    >
-      <span aria-hidden="true">＋</span>
-      <span>Kalkulyator</span>
-    </button>
 
     <div
       v-if="calculatorOpen"
@@ -154,32 +153,11 @@ async function logout() {
 </template>
 
 <style scoped>
-.calculator-fab {
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
-  z-index: 40;
+.calculator-header-button {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px 17px;
-  border: 0;
-  border-radius: 999px;
-  background: var(--steel);
-  color: #ffffff;
-  font: inherit;
-  font-weight: 600;
-  box-shadow: 0 5px 18px rgba(30, 42, 50, 0.25);
-  cursor: pointer;
-}
-
-.calculator-fab:hover {
-  background: var(--steel-dark);
-}
-
-.calculator-fab > span:first-child {
-  font-size: 1.35rem;
-  line-height: 1;
+  gap: 6px;
+  white-space: nowrap;
 }
 
 .calculator-overlay {
@@ -233,14 +211,9 @@ async function logout() {
 }
 
 @media (max-width: 600px) {
-  .calculator-fab {
-    right: 14px;
-    bottom: 14px;
-    padding: 11px 14px;
-  }
-
-  .calculator-fab > span:last-child {
-    display: none;
+  .calculator-header-button {
+    padding: 7px 9px;
+    font-size: 0.82rem;
   }
 
   .calculator-modal {
